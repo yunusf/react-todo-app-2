@@ -1,7 +1,8 @@
 import React from 'react'
 import TodoItem from './TodoItem'
 
-const Todos = ({ todos }) => {
+// Menerima function toggleCompleted sebagai sebuah prop
+const Todos = ({ todos, toggleCompleted }) => {
   return (
     <div style={styles.container}>
       {/* <h1>This is Todos component</h1> */}
@@ -11,7 +12,8 @@ const Todos = ({ todos }) => {
           {/* return <p key={todo.id}>{ todo.title }</p> */ }
 
           // Berikan datanya ke TodoItem | data di load di todoitem.js
-          return <TodoItem key={todo.id} todo={todo} />
+          // Teruskan function toggleCompleted ke component TodoItem
+          return <TodoItem key={todo.id} todo={todo} toggleCompleted={toggleCompleted} />
         })
       }
     </div>
@@ -20,7 +22,7 @@ const Todos = ({ todos }) => {
 
 const styles = {
   container: {
-    width: '80%',
+    width: 'auto',
     margin: 'auto',
   }
 }
