@@ -22,27 +22,37 @@ function App() {
 
   console.log(todos)
 
+  // Definisikan toggleCompleted di sini
+  const toggleCompleted = (todoId) => {
+    const updateTodos = todos.map((todo) => {
+      if (todo.id === todoId) {
+        todo.completed = !todo.completed
+      }
+      return todo
+    })
+    setTodos(updateTodos)
+  }
+
   return (
     <div style={ styles.container }>
-      <h1 style={ styles.title }>My Todo List</h1>
+      <h1 style={styles.title}>My Todo List</h1>
+      
+      {/* Teruskan function toggleCompleted ke component Todos */}
+      <Todos todos={todos} toggleCompleted={toggleCompleted} />
 
       {/* Gunakan method map di sini */}
       {/* <p>todo di app.js</p>
       {todos.map((todo) => <p key={todo.id}>id: {todo.id} | {todo.title}</p>)} */}
-
-      {/* Berikan data-nya ke component Todos */}
-      <Todos todos={ todos } /> {/* Menampilkan component Todos */}
     </div>
   )
 }
 
 const styles = {
   container: {
-    // textAlign: 'center',
-    // padding: '12px',
-    // width: '500px',
+    padding: '12px',
+    width: '500px',
 
-    padding: '60px',
+    margin: '10px 450px',
     textAlign: 'center',
     color: 'white',
   },
