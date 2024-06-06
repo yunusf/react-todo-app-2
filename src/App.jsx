@@ -33,12 +33,28 @@ function App() {
     setTodos(updateTodos)
   }
 
+  const deleteTodo = (todoId) => {
+    // old way
+    /*
+      console.log('delete todo');
+      const del = delete todos[todoId-1]
+      console.log(`todoId$:${todoId}`);
+      console.log(todos);
+      console.log(`delete: ${del}`);
+    */
+    
+    // try with array filter
+    const newTodos = todos.filter((todo) => todo.id !== todoId)
+
+    setTodos(newTodos)
+  }
+
   return (
     <div style={ styles.container }>
       <h1 style={styles.title}>My Todo List</h1>
       
       {/* Teruskan function toggleCompleted ke component Todos */}
-      <Todos todos={todos} toggleCompleted={toggleCompleted} />
+      <Todos todos={todos} toggleCompleted={toggleCompleted} deleteTodo={deleteTodo} />
 
       {/* Gunakan method map di sini */}
       {/* <p>todo di app.js</p>
