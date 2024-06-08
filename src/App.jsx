@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, createContext } from 'react'
 import Todos from './components/Todos'
 import TodoForm from './components/TodoForm'
+
+export const TodoContext = createContext()
 
 function App() {
   const [todos, setTodos] = useState([
@@ -21,9 +23,6 @@ function App() {
     },
   ])
 
-  console.log(todos)
-
-  // Definisikan toggleCompleted di sini
   const toggleCompleted = (todoId) => {
     const updateTodos = todos.map((todo) => {
       if (todo.id === todoId) {
@@ -34,26 +33,12 @@ function App() {
     setTodos(updateTodos)
   }
 
-  const deleteTodo = (todoId) => {
-    // old way
-    /*
-      console.log('delete todo');
-      const del = delete todos[todoId-1]
-      console.log(`todoId$:${todoId}`);
-      console.log(todos);
-      console.log(`delete: ${del}`);
-    */
-    
-    // try with array filter
+  const deleteTodo = (todoId) => {   
     const newTodos = todos.filter((todo) => todo.id !== todoId)
 
     setTodos(newTodos)
   }
 
-  // Definisikan function addTodo
-  // const addTodo = () => {
-  //   console.log('This is addTodo function');
-  // }
   const addTodo = (todoTitle) => {
     if (todoTitle === '') {
       return
@@ -70,19 +55,22 @@ function App() {
   }
 
   return (
-    <div style={ styles.container }>
-      <h1 style={styles.title}>My Todo List</h1>
+    <TodoContext.Provider value={{ toggleCompleted, deleteTodo}}>
+      <div style={ styles.container }>
+        <h1 style={styles.title}>My Todo List</h1>
 
-      {/* Menampilkan component TodoForm */}
-      <TodoForm addTodo={addTodo} /> {/* Teruskan function addTodo sebagai props */}
-      
-      {/* Teruskan function toggleCompleted ke component Todos */}
-      <Todos todos={todos} toggleCompleted={toggleCompleted} deleteTodo={deleteTodo} />
-
-      {/* Gunakan method map di sini */}
-      {/* <p>todo di app.js</p>
-      {todos.map((todo) => <p key={todo.id}>id: {todo.id} | {todo.title}</p>)} */}
-    </div>
+        <TodoForm addTodo={addTodo} /> {/* Teruskan function addTodo sebagai props */}
+        
+        {/* Teruskan function toggleCompleted ke component Todos */}
+        <Todos
+          todos={todos}
+          /* old way
+            toggleCompleted={toggleCompleted} tidak diperlukan lagi 
+            deleteTodo={deleteTodo} tidak diperlukan lagi
+          */
+        />
+      </div>
+    </TodoContext.Provider>
   )
 }
 

@@ -1,8 +1,7 @@
-import React from "react"
+import React, { useContext } from "react"
+import { TodoContext } from "../App"
 
-// Menerima function toggleCompleted sebagai sebuah prop
-const TodoItem = ({ todo, toggleCompleted, deleteTodo }) => {
-    // Definisikan function getTodoTitleStyle di sini
+const TodoItem = ({ todo }) => {
     const getTodoTitleStyle = () => {
         if (todo.completed === true) {
             return { textDecoration: 'line-through' }
@@ -10,6 +9,8 @@ const TodoItem = ({ todo, toggleCompleted, deleteTodo }) => {
             return { textDecoration: 'none'}
         }
     }
+
+    const { toggleCompleted, deleteTodo } = useContext(TodoContext)
 
     return (
         <div style={styles.todoItem}>
@@ -33,7 +34,6 @@ const TodoItem = ({ todo, toggleCompleted, deleteTodo }) => {
     )
 }
 
-// const style = {
 const styles = {
     todoItem: {
         border: '2px solid #f4f4f4',
